@@ -3,6 +3,7 @@
 namespace Deployee\Plugins\GenerateDeploy\Commands;
 
 use Deployee\Components\Config\ConfigInterface;
+use Deployee\Components\Environment\Environment;
 use Deployee\Plugins\Deploy\Definitions\Deploy\AbstractDeployDefinition;
 use Nette\PhpGenerator\ClassType;
 use Symfony\Component\Console\Command\Command;
@@ -16,6 +17,19 @@ class GenerateDeployCommand extends Command
      * @var ConfigInterface
      */
     private $config;
+
+    /**
+     * @var Environment
+     */
+    private $env;
+
+    /**
+     * @param Environment $env
+     */
+    public function setEnv(Environment $env)
+    {
+        $this->env = $env;
+    }
 
     /**
      * @param ConfigInterface $config
@@ -46,6 +60,10 @@ class GenerateDeployCommand extends Command
         $class = sprintf('Deploy_%d_%s', time(), $input->getArgument('name'));
         $class = str_replace(['-', ' '], '_', $class);
         $filePath = $this->config->get('deploy_definition_path') . "/{$class}.php";
+        $filePath = strpos($filePath, '/') !== 0 && strpos($filePath, ':') !== 1
+            ? $this->env->getWorkDir() . DIRECTORY_SEPARATOR . $filePath
+            : $filePath;
+
         $fileContents = $this->generateFileContents($class);
         if(!file_put_contents($filePath, $fileContents)){
             throw new \RuntimeException('File could not be generated!');

@@ -14,7 +14,8 @@
         "deployee/application": "^1.0",
         "deployee/config": "^1.0",
         "deployee/plugin-deploy": "^1.0",
-        "nette/php-generator": "^3.0"
+        "nette/php-generator": "^3.0",
+        "deployee/environment": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5"
