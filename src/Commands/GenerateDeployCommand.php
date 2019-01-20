@@ -3,7 +3,7 @@
 namespace Deployee\Plugins\GenerateDeploy\Commands;
 
 use Deployee\Components\Config\ConfigInterface;
-use Deployee\Components\Environment\Environment;
+use Deployee\Components\Environment\EnvironmentInterface;
 use Deployee\Plugins\Deploy\Definitions\Deploy\AbstractDeployDefinition;
 use Nette\PhpGenerator\ClassType;
 use Symfony\Component\Console\Command\Command;
@@ -19,14 +19,14 @@ class GenerateDeployCommand extends Command
     private $config;
 
     /**
-     * @var Environment
+     * @var EnvironmentInterface
      */
     private $env;
 
     /**
-     * @param Environment $env
+     * @param EnvironmentInterface $env
      */
-    public function setEnv(Environment $env)
+    public function setEnv(EnvironmentInterface $env)
     {
         $this->env = $env;
     }
