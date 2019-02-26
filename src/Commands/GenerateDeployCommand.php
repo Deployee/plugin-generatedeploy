@@ -6,6 +6,7 @@ use Deployee\Components\Config\ConfigInterface;
 use Deployee\Components\Environment\EnvironmentInterface;
 use Deployee\Plugins\Deploy\Definitions\Deploy\AbstractDeployDefinition;
 use Nette\PhpGenerator\ClassType;
+use Nette\PhpGenerator\Helpers;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -87,10 +88,11 @@ class GenerateDeployCommand extends Command
         $method->setComment('@return void');
         $method->setBody('// Start writing awesome deployments');
 
-        return <<<EOL
+        return Helpers::tabsToSpaces(<<<EOL
 <?php
 
 {$generator}
-EOL;
+EOL
+        );
     }
 }
